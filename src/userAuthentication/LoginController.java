@@ -90,7 +90,7 @@ public class LoginController {
 
          try {
             if (!UserManager.adminExists()) {
-        		SceneManager.switchScene(event, "usercreation.fxml");
+        		SceneManager.switchScene(event, "../userAuthentication/registerUser.fxml");
         		} else {
         		messageLabel.setText("Registration is disabled. Only admins can create users.");
         		}
@@ -98,7 +98,6 @@ public class LoginController {
         		messageLabel.setText("Error checking registration status.");
         		}
         	}
-     }
     
     @FXML
     public void initialize() {

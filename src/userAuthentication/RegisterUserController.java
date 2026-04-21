@@ -100,7 +100,8 @@ public class RegisterUserController {
         DarkThemeUtil.styleSecondaryButton(exitButton);
     	
     	exitButton.setOnAction(e -> {
-    		SceneManager.switchScene(e, "mainMenu.fxml");
+    		if(Session.getCurrentUser() == null) SceneManager.switchScene(e, "../userAuthentication/loginpage.fxml");
+    		else SceneManager.switchScene(e, "../mainMenu/mainMenu.fxml");
     	});
     	
     }
