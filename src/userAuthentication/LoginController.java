@@ -87,21 +87,17 @@ public class LoginController {
 
     @FXML
     void handelRegister(ActionEvent event) {
-    	
-    	 String username = usernameField.getText();
-         String password = passwordField.getText();
-
-         if (username.isEmpty() || password.isEmpty()) {
-             messageLabel.setText("Please fill in all fields.");
-             return;
-         }
 
          try {
-             UserManager.registerUser(username, password);
-             messageLabel.setText("User registered!");
-         } catch (IOException e) {
-             messageLabel.setText("Error saving user.");
-         }
+            if (!UserManager.adminExists()) {
+        		SceneManager.switchScene(event, "usercreation.fxml");
+        		} else {
+        		messageLabel.setText("Registration is disabled. Only admins can create users.");
+        		}
+        	} catch (IOException e) {
+        		messageLabel.setText("Error checking registration status.");
+        		}
+        	}
      }
     
     @FXML
@@ -116,6 +112,14 @@ public class LoginController {
 
     	    DarkThemeUtil.stylePrimaryButton(loginButton);
     	    DarkThemeUtil.styleSecondaryButton(registerButton);
+
+		try {
+    	registerButton.setVisible(!UserManager.adminExists());
+    } catch (IOException e) {
+    		messageLabel.setText("Error loading page.");
+    	}
+		
+		
     }
     
   

@@ -50,16 +50,40 @@ public class RegisterUserController {
     	String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (username == null || username.trim().isEmpty() || password == null || password.isEmpty()) {
             messageLabel.setText("Please fill in all fields.");
             return;
         }
 
         try {
-            UserManager.registerUser(username, password);
-            messageLabel.setText("Guest registered!");
+            if (UserManager.userExists(username)) {
+                messageLabel.setText("Username already exists.");
+                return;
+            }
+
+            boolean created = UserManager.registerUser(username, password);
+
+            if (created) {
+                if (Session.isLoggedIn()) {
+                    messageLabel.setText("Guest registered successfully.");
+                } else {
+                    messageLabel.setText("Admin account created successfully.");
+                }
+
+                usernameField.clear();
+                passwordField.clear();
+            } else {
+                if (!Session.isLoggedIn()) {
+                    messageLabel.setText("Unable to create first account.");
+                } else if (!Session.isAdmin()) {
+                    messageLabel.setText("Only admins can create users.");
+                } else {
+                    messageLabel.setText("Could not create user.");
+                }
+            }
+
         } catch (IOException e) {
-            messageLabel.setText("Error saving Guest.");
+            messageLabel.setText("Error saving user.");
         }
     }
     
