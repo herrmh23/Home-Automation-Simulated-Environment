@@ -26,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 
 public class MainMenuController {
 
@@ -326,6 +327,9 @@ public class MainMenuController {
 			if (selected == null) return;
 
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.initOwner(deleteRuleButton.getScene().getWindow());
+			alert.initModality(Modality.WINDOW_MODAL);
+			
 			alert.setTitle("Delete Rule");
 			alert.setHeaderText("Delete Rule: " + selected.getRuleName());
 			alert.setContentText("This action cannot be undone.");
