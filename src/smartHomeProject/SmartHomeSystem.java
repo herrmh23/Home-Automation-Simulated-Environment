@@ -88,6 +88,9 @@ public class SmartHomeSystem {
 
 	public void addRule(Rule rule) {
 		rules.add(rule);
+		 FXCollections.sort(rules, (r1, r2) ->
+        Integer.compare(r1.getStartTime(), r2.getStartTime())
+    );
 		saveCurrentSystemData();
 	}
 
