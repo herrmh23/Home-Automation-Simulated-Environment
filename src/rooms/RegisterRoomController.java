@@ -12,6 +12,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import mainMenu.MainMenuController;
 import smartHomeProject.SmartHomeSystem;
@@ -131,6 +132,9 @@ public class RegisterRoomController{
 				
 				//removes the room's devices from the system
 				for(Devices d : selected.getDevices()) {
+					d.setOn(false);
+					mainMenuController.getHomeViewController().applyLightEffect(d.getNode(), false);
+					mainMenuController.getHomeViewController().animateColor(d.getNode(), Color.web("#9e9e9e"));
 					mainMenuController.getSmartHomeSystem().getDevices().remove(d);
 				}
 				
